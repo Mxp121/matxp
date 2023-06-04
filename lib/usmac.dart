@@ -27,30 +27,33 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('UCMAC'),
       ),
-      body: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 50,),
-                Image.asset("",scale: 100,),
-                SizedBox(height: 20,),
-                ElevatedButton(onPressed: (){}, child: Text("Generate")),
-                Row(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Answer",
-                        
-                      ),
-                    ),
-                    SizedBox(width: 5,),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.check))
-                  ],
-                ),
-                
-              ])),
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SizedBox(
+          height: 50,
+        ),
+        Image.asset(
+          "assets/1.jpeg",
+          height: 200,
+          width: 200,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        ElevatedButton(onPressed: () {}, child: Text("Generate")),
+        Row(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Answer",
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            IconButton(onPressed: () {}, icon: Icon(Icons.check))
+          ],
+        ),
+      ]),
     );
   }
 }
