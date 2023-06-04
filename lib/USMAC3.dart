@@ -94,8 +94,8 @@ class _NumberQuizState extends State<NumberQuiz> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.asset('images/$num1.png', width: 100.0, height: 100.0),
-                Image.asset('images/$num2.png', width: 100.0, height: 100.0),
+                Image.asset('assets/$num1.png', width: 100.0, height: 100.0),
+                Image.asset('assets/$num2.png', width: 100.0, height: 100.0),
               ],
             ),
             SizedBox(height: 20.0),
