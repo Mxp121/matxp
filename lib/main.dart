@@ -92,7 +92,7 @@ class _NumberQuizState extends State<NumberQuiz>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'USMAC Number Quiz',
+          'ucmas Number Quiz',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
