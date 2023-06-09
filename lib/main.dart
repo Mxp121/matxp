@@ -126,7 +126,7 @@ class _NumberQuizState extends State<NumberQuiz>
                     MaterialPageRoute(builder: (context) => SettingAPP()));
               } else if (value == 'about') {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AboutAPP()));
+                    MaterialPageRoute(builder: (context) => AboutPage()));
               }
               if (value == 'Speed+') {
                 setState(() {
@@ -144,7 +144,7 @@ class _NumberQuizState extends State<NumberQuiz>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.red,Colors.black12],
+            colors: [Colors.blue,Colors.white],
           ),
         ),
         child: Center(
