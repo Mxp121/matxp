@@ -7,6 +7,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'About Page',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        fontFamily: 'Montserrat',
+      ),
       home: AboutPage(),
     );
   }
@@ -19,12 +23,21 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About Page'),
+        title: Text(
+          'About Page',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24.0,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0.0,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 200,
+            height: 250,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.purple, Colors.blue],
@@ -36,17 +49,53 @@ class AboutPage extends StatelessWidget {
                 bottomRight: Radius.circular(50),
               ),
             ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 75,
+                  backgroundImage: AssetImage('assets/profile.jpg'),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Matin Atef',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Developer',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 50,),
+          SizedBox(height: 24),
+          Text(
+            'My Team',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/profile.jpg'),
               ),
-              SizedBox(
-                width: 50,
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/profile.jpg'),
               ),
               CircleAvatar(
                 radius: 50,
@@ -56,23 +105,26 @@ class AboutPage extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-
               Text(
-                'Matin Atef',
+                'Iqbal Saber',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                width: 50,
+              Text(
+                'Samir KhairAndish',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 'Towhid - 2',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -80,32 +132,44 @@ class AboutPage extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'APP Developer',
+                'Editor',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey[700],
+                ),
+              ),
+              Text(
+                'Editor',
                 style: TextStyle(
                   fontSize: 18,
                   fontStyle: FontStyle.italic,
+                  color: Colors.grey[700],
                 ),
               ),
-              SizedBox(width: 50,),
               Text(
                 'Private School',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontStyle: FontStyle.italic,
+                  color: Colors.grey[700],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 24),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              '',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+              "This is the USMAC App made by Matin Atef and Towhid Private School with the help of my friends and teacher Mr.Wasim",
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[700],
+              ),
             ),
           ),
         ],

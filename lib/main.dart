@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'About-1.dart';
 import 'Setting-1.dart';
 
 void main() => runApp(MyApp());
- var sped1;
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark(),
+      theme: ThemeData.dark().copyWith(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+      ),
       debugShowCheckedModeBanner: false,
       title: 'USMAC Number Quiz',
       home: NumberQuiz(),
@@ -31,20 +33,20 @@ class _NumberQuizState extends State<NumberQuiz>
   TextEditingController answerController = TextEditingController();
   late AnimationController _controller;
   late Animation<double> _animation;
-  int sped1 = 5;
+  int speed = 5;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(seconds: sped1),
+      duration: Duration(seconds: speed),
       vsync: this,
     );
     _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
   }
 
   void checkAnswer() {
-    int userAnswer = int.parse(answerController.text);
+    int userAnswer = int.tryParse(answerController.text) ?? -1;
     int sum = num1 + num2;
     setState(() {
       correctAnswer = sum;
@@ -76,24 +78,11 @@ class _NumberQuizState extends State<NumberQuiz>
         },
       );
     } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Incorrect!'),
-            content: Text('$num1 + $num2 = $sum'),
-            actions: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  _controller.reset();
-                  _controller.forward();
-                  Navigator.of(context).pop();
-                },
-                child: Text('Try Again'),
-              ),
-            ],
-          );
-        },
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Incorrect! Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
       );
     }
   }
@@ -102,37 +91,94 @@ class _NumberQuizState extends State<NumberQuiz>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('USMAC Number Quiz'),
+        title: Text(
+          'USMAC Number Quiz',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
-                child: Text('Settings'),
+                child: Icon(Icons.settings),
                 value: 'settings',
               ),
               PopupMenuItem(
-                child: Text('Speed+'),
-                value: 'Speed+',
+                child: Icon(Icons.speed),
+                value: 'speed',
               ),
               PopupMenuItem(
-                child: Text('About'),
+                child: Icon(Icons.info),
                 value: 'about',
               ),
             ],
             onSelected: (value) {
-              // Handle menu item selection
               if (value == 'settings') {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingAPP()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingPage(
+                      currentSpeed: speed,
+                      onSpeedChanged: (newSpeed) {
+                        setState(() {
+                          speed = newSpeed;
+                          _controller.duration = Duration(seconds: speed);
+                        });
+                      },
+                    ),
+                  ),
+                );
               } else if (value == 'about') {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AboutPage()));
-              }
-              if (value == 'Speed+') {
-                setState(() {
-                  sped1 = sped1 + 5;
-                  _controller.duration = Duration(seconds: sped1);
-                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutPage()),
+                );
+              } else if (value == 'speed') {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Select Animation Speed'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            title: Text('Slow'),
+                            leading: Icon(Icons.arrow_drop_down),
+                            onTap: () {
+                              setState(() {
+                                speed = 10;
+                                _controller.duration = Duration(seconds: speed);
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('Normal'),
+                            leading: Icon(Icons.arrow_right),
+                            onTap: () {
+                              setState(() {
+                                speed = 5;
+                                _controller.duration = Duration(seconds: speed);
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('Fast'),
+                            leading: Icon(Icons.arrow_drop_up),
+                            onTap: () {
+                              setState(() {
+                                speed = 2;
+                                _controller.duration = Duration(seconds: speed);
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
               }
             },
             icon: Icon(Icons.more_vert),
@@ -144,7 +190,7 @@ class _NumberQuizState extends State<NumberQuiz>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.blue,Colors.white],
+            colors: [Colors.blue, Colors.white],
           ),
         ),
         child: Center(
@@ -156,14 +202,20 @@ class _NumberQuizState extends State<NumberQuiz>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Image.asset('assets/$num1.jpg',
-                        width: 200.0, height: 200.0),
+                    Image.asset(
+                      'assets/$num1.jpg',
+                      width: 200.0,
+                      height: 200.0,
+                    ),
                     Text(
                       "+",
                       style: TextStyle(fontSize: 50),
                     ),
-                    Image.asset('assets/$num2.jpg',
-                        width: 200.0, height: 200.0),
+                    Image.asset(
+                      'assets/$num2.jpg',
+                      width: 200.0,
+                      height: 200.0,
+                    ),
                   ],
                 ),
               ),
@@ -174,6 +226,13 @@ class _NumberQuizState extends State<NumberQuiz>
                   controller: answerController,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24),
+                  decoration: InputDecoration(
+                    hintText: 'Enter answer',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 20.0),
@@ -184,11 +243,6 @@ class _NumberQuizState extends State<NumberQuiz>
                   checkAnswer();
                 },
                 child: Text('Check Answer'),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'Correct Answer: $correctAnswer',
-                style: TextStyle(fontSize: 18.0),
               ),
             ],
           ),
