@@ -29,12 +29,12 @@ class _NumberQuizState extends State<NumberQuiz>
     with SingleTickerProviderStateMixin {
   int num1 = Random().nextInt(10);
   int num2 = Random().nextInt(10);
+  String operation = "select the opration";
   int correctAnswer = 0;
   TextEditingController answerController = TextEditingController();
   late AnimationController _controller;
   late Animation<double> _animation;
   int speed = 5;
-
   @override
   void initState() {
     super.initState();
@@ -47,17 +47,37 @@ class _NumberQuizState extends State<NumberQuiz>
 
   void checkAnswer() {
     int userAnswer = int.tryParse(answerController.text) ?? -1;
-    int sum = num1 + num2;
+    int result = 0;
+    switch (operation) {
+      case '+':
+        result = num1 + num2;
+        break;
+      case '-':
+        result = num1 - num2;
+        break;
+      case '×':
+        result = num1 * num2;
+        break;
+      case '÷':
+        result = num1 % num2 == 0 ? num1 ~/ num2 : -1;
+        while (result % 2 != 0) {
+          num1 = Random().nextInt(10);
+          num2 = Random().nextInt(10);
+          result = num1 % num2 == 0 ? num1 ~/ num2 : -1;
+        }
+        break;
+    }
+
     setState(() {
-      correctAnswer = sum;
+      correctAnswer = result;
     });
-    if (userAnswer == sum) {
+    if (userAnswer == result) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Correct!'),
-            content: Text('$num1 + $num2 = $sum'),
+            content: Text('$num1 $operation $num2 = $result'),
             actions: <Widget>[
               ElevatedButton(
                 onPressed: () {
@@ -66,6 +86,7 @@ class _NumberQuizState extends State<NumberQuiz>
                   setState(() {
                     num1 = Random().nextInt(10);
                     num2 = Random().nextInt(10);
+
                     correctAnswer = 0;
                     answerController.clear();
                   });
@@ -107,6 +128,10 @@ class _NumberQuizState extends State<NumberQuiz>
                 value: 'speed',
               ),
               PopupMenuItem(
+                child: Text("Oprations"),
+                value: 'Oparations',
+              ),
+              PopupMenuItem(
                 child: Icon(Icons.info),
                 value: 'about',
               ),
@@ -131,6 +156,56 @@ class _NumberQuizState extends State<NumberQuiz>
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AboutPage()),
+                );
+              } else if (value == 'Oparations') {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Select the Opration'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            title: Text('+'),
+                            onTap: () {
+                              setState(() {
+                                operation = "+";
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('-'),
+                            onTap: () {
+                              setState(() {
+                                operation = "-";
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('×'),
+                            onTap: () {
+                              setState(() {
+                                operation = "×";
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Text('÷'),
+                            onTap: () {
+                              setState(() {
+                                operation = "÷";
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 );
               } else if (value == 'speed') {
                 showDialog(
@@ -208,7 +283,7 @@ class _NumberQuizState extends State<NumberQuiz>
                       height: 200.0,
                     ),
                     Text(
-                      "+",
+                      operation,
                       style: TextStyle(fontSize: 50),
                     ),
                     Image.asset(

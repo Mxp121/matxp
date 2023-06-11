@@ -99,7 +99,7 @@ class AboutPage extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/profile.jpg'),
+                backgroundImage: AssetImage('assets/Towhid.jpg'),
               ),
             ],
           ),
