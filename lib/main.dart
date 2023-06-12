@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'About-1.dart';
-import 'Setting-1.dart';
+import 'about_page.dart';
+import 'setting_page.dart';
 
 void main() => runApp(MyApp());
 
