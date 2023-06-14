@@ -164,7 +164,7 @@ class AboutPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "This is the ucmas App made by Matin Atef and Towhid Private School with the help of my friends and teacher Mr.Wasim",
+              "This is the ucmas App made by Matin Atef and Towhid Private School with the help of my friends and instractor Ehsan Hasin",
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 16,

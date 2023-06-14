@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData.light().copyWith(
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
@@ -27,9 +27,9 @@ class NumberQuiz extends StatefulWidget {
 
 class _NumberQuizState extends State<NumberQuiz>
     with SingleTickerProviderStateMixin {
-  int num1 = Random().nextInt(10);
-  int num2 = Random().nextInt(10);
-  String operation = "select the opration";
+  int num1 = Random().nextInt(100);
+  int num2 = Random().nextInt(100);
+  String operation = "+";
   int correctAnswer = 0;
   TextEditingController answerController = TextEditingController();
   late AnimationController _controller;
@@ -59,13 +59,17 @@ class _NumberQuizState extends State<NumberQuiz>
         result = num1 * num2;
         break;
       case '÷':
-        result = num1 % num2 == 0 ? num1 ~/ num2 : -1;
-        while (result % 2 != 0) {
-          num1 = Random().nextInt(10);
-          num2 = Random().nextInt(10);
-          result = num1 % num2 == 0 ? num1 ~/ num2 : -1;
+        result =  num1 ~/ num2 ;
+        if (num1 == num1.isOdd){
+          num1 = num1 + 1;
         }
-        break;
+        if (num2 == num2.isOdd){
+          num2 = num2 + 1;
+        }
+          num1 = Random().nextInt(100);
+          num2 = Random().nextInt(100);
+
+
     }
 
     setState(() {
@@ -84,8 +88,8 @@ class _NumberQuizState extends State<NumberQuiz>
                   _controller.reset();
                   _controller.forward();
                   setState(() {
-                    num1 = Random().nextInt(10);
-                    num2 = Random().nextInt(10);
+                    num1 = Random().nextInt(100);
+                    num2 = Random().nextInt(100);
 
                     correctAnswer = 0;
                     answerController.clear();
@@ -120,11 +124,11 @@ class _NumberQuizState extends State<NumberQuiz>
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
-                child: Icon(Icons.settings),
+                child: Icon(Icons.settings, color: Colors.black,),
                 value: 'settings',
               ),
               PopupMenuItem(
-                child: Icon(Icons.speed),
+                child: Icon(Icons.speed, color: Colors.black,),
                 value: 'speed',
               ),
               PopupMenuItem(
@@ -132,7 +136,7 @@ class _NumberQuizState extends State<NumberQuiz>
                 value: 'Oparations',
               ),
               PopupMenuItem(
-                child: Icon(Icons.info),
+                child: Icon(Icons.info, color: Colors.black,),
                 value: 'about',
               ),
             ],
