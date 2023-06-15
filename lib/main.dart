@@ -59,17 +59,15 @@ class _NumberQuizState extends State<NumberQuiz>
         result = num1 * num2;
         break;
       case '÷':
-        result =  num1 ~/ num2 ;
-        if (num1 == num1.isOdd){
+        result = num1 ~/ num2;
+        if (num1 == num1.isOdd) {
           num1 = num1 + 1;
         }
-        if (num2 == num2.isOdd){
+        if (num2 == num2.isOdd) {
           num2 = num2 + 1;
         }
-          num1 = Random().nextInt(100);
-          num2 = Random().nextInt(100);
-
-
+        num1 = Random().nextInt(100);
+        num2 = Random().nextInt(100);
     }
 
     setState(() {
@@ -124,11 +122,17 @@ class _NumberQuizState extends State<NumberQuiz>
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
-                child: Icon(Icons.settings, color: Colors.black,),
+                child: Icon(
+                  Icons.settings,
+                  color: Colors.black,
+                ),
                 value: 'settings',
               ),
               PopupMenuItem(
-                child: Icon(Icons.speed, color: Colors.black,),
+                child: Icon(
+                  Icons.speed,
+                  color: Colors.black,
+                ),
                 value: 'speed',
               ),
               PopupMenuItem(
@@ -136,7 +140,10 @@ class _NumberQuizState extends State<NumberQuiz>
                 value: 'Oparations',
               ),
               PopupMenuItem(
-                child: Icon(Icons.info, color: Colors.black,),
+                child: Icon(
+                  Icons.info,
+                  color: Colors.black,
+                ),
                 value: 'about',
               ),
             ],
@@ -317,11 +324,27 @@ class _NumberQuizState extends State<NumberQuiz>
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  _controller.reset();
-                  _controller.forward();
-                  checkAnswer();
+                  setState(() {
+                    _controller.reset();
+                    _controller.forward();
+                    checkAnswer();
+                  });
                 },
-                child: Text('Check Answer'),
+                child: Text(
+                  "Generate",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontFamily: "CODE"
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+
+                ),
               ),
             ],
           ),
