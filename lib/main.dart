@@ -4,21 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'about_page.dart';
 import 'setting_page.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
+void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'USMAC Number Quiz',
       home: NumberQuiz(),
-    );
-  }
-}
+    ));
 
 class NumberQuiz extends StatefulWidget {
   @override
@@ -29,7 +19,7 @@ class _NumberQuizState extends State<NumberQuiz>
     with SingleTickerProviderStateMixin {
   int num1 = Random().nextInt(10);
   int num2 = Random().nextInt(10);
-  String operation = "select the opration";
+  String operation = "Operation";
   int correctAnswer = 0;
   TextEditingController answerController = TextEditingController();
   late AnimationController _controller;
@@ -120,24 +110,28 @@ class _NumberQuizState extends State<NumberQuiz>
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
-                child: Icon(Icons.settings),
-                value: 'settings',
+                child: Icon(Icons.settings, color: Colors.lightBlue,),
+                value: 'Settings',
+                textStyle: TextStyle(color: Colors.black),
               ),
               PopupMenuItem(
-                child: Icon(Icons.speed),
-                value: 'speed',
+                child: Icon(Icons.speed, color: Colors.lightBlue,),
+                value: 'Speed',
+                textStyle: TextStyle(color: Colors.black),
               ),
               PopupMenuItem(
-                child: Text("Oprations"),
+                child: Icon(Icons.add, color: Colors.lightBlue,),
                 value: 'Oparations',
+                textStyle: TextStyle(color: Colors.black),
               ),
               PopupMenuItem(
-                child: Icon(Icons.info),
-                value: 'about',
+                child: Icon(Icons.info, color: Colors.lightBlue,),
+                value: 'About',
+                textStyle: TextStyle(color: Colors.black),
               ),
             ],
             onSelected: (value) {
-              if (value == 'settings') {
+              if (value == 'Settings') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -152,12 +146,12 @@ class _NumberQuizState extends State<NumberQuiz>
                     ),
                   ),
                 );
-              } else if (value == 'about') {
+              } else if (value == 'About') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AboutPage()),
                 );
-              } else if (value == 'Oparations') {
+              } else if (value == 'Operations') {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -207,7 +201,7 @@ class _NumberQuizState extends State<NumberQuiz>
                     );
                   },
                 );
-              } else if (value == 'speed') {
+              } else if (value == 'Speed') {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -269,57 +263,59 @@ class _NumberQuizState extends State<NumberQuiz>
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FadeTransition(
-                opacity: _animation,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/$num1.jpg',
-                      width: 200.0,
-                      height: 200.0,
-                    ),
-                    Text(
-                      operation,
-                      style: TextStyle(fontSize: 50),
-                    ),
-                    Image.asset(
-                      'assets/$num2.jpg',
-                      width: 200.0,
-                      height: 200.0,
-                    ),
-                  ],
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FadeTransition(
+                  opacity: _animation,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/$num1.jpg',
+                        width: 200.0,
+                        height: 200.0,
+                      ),
+                      SizedBox(width: 5,),
+                      Text(
+                        operation,
+                        style: TextStyle(fontSize: 50),
+                      ),
+                      SizedBox(width: 5,),
+                      Image.asset(
+                        'assets/$num2.jpg',
+                        width: 200.0,
+                        height: 200.0,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                width: 100.0,
-                child: TextField(
+                SizedBox(height: 20.0),
+                TextField(
                   controller: answerController,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24),
                   decoration: InputDecoration(
-                    hintText: 'Enter answer',
+                    hintText: 'Enter Your Answer',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  _controller.reset();
-                  _controller.forward();
-                  checkAnswer();
-                },
-                child: Text('Check Answer'),
-              ),
-            ],
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () {
+                    _controller.reset();
+                    _controller.forward();
+                    checkAnswer();
+                  },
+                  child: Text('Check the Answer'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
